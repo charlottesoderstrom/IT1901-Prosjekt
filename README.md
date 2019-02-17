@@ -1,8 +1,5 @@
 # IT1901 Project - Group 7
 
-This is project!!!
-
-
 ### Prerequisites
 
 To install, work on, and eventually deploy this software you need the following tools:
