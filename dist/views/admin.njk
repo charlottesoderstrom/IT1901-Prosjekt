@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{% include "partials/dochead.njk" %}
+
+<body>
+
+	{% include "partials/header.njk" %}
+
+	<main>
+		<div class="container">
+			<div class="row">
+				<h2 class="header center-align">Admin</h2>
+			</div>
+		</div>
+		<div class="container">
+			<div class="row">
+				<div class="container" id="requestcontainer">
+					<div class="row">
+						<h3 class="header center-align">Pending role requests</h3>
+					</div>
+					<div class="row">
+						<table id="requesttable" class="col s10 offset-s1">
+							<tr>
+								<th>Email</th>
+								<th>Name</th>
+								<th>Current role</th>
+								<th>Wanted role</th>
+								<th>Refuse</th>
+								<th>Accept</th>
+							</tr>
+							{% for user in requestingUsers %}
+							<tr id="request-user-{{user.id}}">
+								<th>{{ user.email }}</th>
+								<th>{{ user.firstname }} {{ user.lastname }}</th>
+								<th>{{ user.role }}</th>
+								<th>{{ user.requestedRole }}</th>
+								<th><input type='button' value="X" class="btn waves-effect red" onclick='refuseRequest("{{user.id}}")'></th>
+								<th><input type='button' value="✓" class="btn waves-effect green" onclick='acceptRequest("{{user.id}}")'></th>
+							</tr>
+							{% endfor %}
+						</table>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="container" id="userscontainer">
+					<div class="row">
+						<h3 class="header center-align">Search for user</h3>
+					</div>
+					<div class="row">
+						<nav class="col s8 offset-s2">
+							<div class="nav-wrapper">
+								<form onsubmit="search(event); return false">
+									<div class="input-field">
+										<input id="search-field" type="search" required>
+										<label class="label-icon" for="search"><i class="material-icons">search</i></label>
+										<i class="material-icons">close</i>
+									</div>
+								</form>
+							</div>
+						</nav>
+					</div>
+					<div class="row">
+						<table id="usertable" class="col s10 offset-s1">
+							<tr>
+								<th>Email</th>
+								<th>Name</th>
+								<th>Role</th>
+								<th>New Role</th>
+							</tr>
+						</table>
+					</div>
+					<div class="row">
+						<input type="submit" value="send" onclick="sendNewValues()" class="btn waves-effect"/>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+
+	{% include "partials/scripts.njk" %}
+
+	<script src="/js/admin.js"></script>
+
+</body>
+
+{% include "partials/footer.njk" %}
+
+</html>

@@ -1,0 +1,48 @@
+<header>
+	<nav>
+		<div class="nav-wrapper">
+			<a href="{% if user %}/browse{% else %}/{% endif %}" class="brand-logo">
+				<img class="brand-logo" src="/images/logo-textful.png" alt="Textful-logo" >
+			</a>
+			<a href="#" data-target="mobile-nav" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+			<ul class="right hide-on-med-and-down">
+				{% if user.role == 'editor' or user.role == 'executive' or user.role == 'admin' %}
+				<li><a href="/work">Proofreading & Work</a></li>
+				{% endif %}
+				{% if user.role == 'author' or user.role == 'editor' or user.role == 'executive' or user.role == 'admin' %}
+				<li><a href="/new">Write something</a></li>
+				{% endif %}
+				{% if user %}
+				<li><a href="/browse">Browse content</a></li>
+				{% endif %}
+				<li>
+					{% if user %}
+					<a class='dropdown-trigger btn' href='/profile' data-target='dropdown1'>{{ user.firstname + ' ' + user.lastname }}</a>
+						<ul id='dropdown1' class='dropdown-content'>
+							<li><a href="/profile">My profile</a></li>
+							<li><a id="header-signoff-btn">Sign off</a></li>
+						</ul>
+					</a>
+					{% else %}
+					<a href="/">Login</a>
+					{% endif%}
+				</li>
+			</ul>
+		</div>
+	</nav>
+	<ul class="sidenav" id="mobile-nav">
+		{% if user.role == 'editor' or user.role == 'executive' or user.role == 'admin' %}
+		<li><a href="/work">Proofreading & Work</a></li>
+		{% endif %}
+		{% if user.role == 'author' or user.role == 'editor' or user.role == 'executive' or user.role == 'admin' %}
+		<li><a href="/new">Write something</a></li>
+		{% endif %}
+		{% if user %}
+		<li><a href="/browse">Browse content</a></li>
+		<li><a href="/profile">My profile</a></li>
+		<li><a id="header-signoff-btn-mobile">Sign off</a></li>
+		{% else %}
+		<li><a href="/">Login</a></li>
+		{% endif%}
+	</ul>
+</header>

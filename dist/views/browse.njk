@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{% include "partials/dochead.njk" %}
+
+<body>
+
+	{% include "partials/header.njk" %}
+
+	<main>
+
+		<div class="container" id="browserheadercontainer">
+			<div class="row">
+				<div class="col s12">
+					<h2 class="header center-align">Feed</h2>
+				</div>
+			</div>
+		</div>
+
+		<div class="container">
+			<div class="row">
+				<div class="col s12">
+					<div class="container">
+						{% for post in posts %}
+						{% if post.verified or (user.id == post.author.id or user.role == 'editor' or user.role == 'executive' or user.role == 'admin') %}
+						<div class="row">
+							<div class="card hoverable">
+								<div class="card-content activator">
+									<h5 class="card-title activator">{{ post.headline }}</h5>
+									<p class="activator"><strong>Author: </strong>{{ post.author.firstname}} {{ post.author.lastname }}</p>
+									<p class="activator"><strong>Written: </strong>{{ post.createdAt }}</p>
+									<p class="activator"><strong>Category: </strong>{{ post.category }}</p>
+									<br>
+									<div class="card-content content-container activator">
+										{{ post.text|safe }}
+									</div>
+									<br>
+									{% if user.id == post.author.id or user.role == 'editor' or user.role == 'executive' or user.role == 'admin' %}
+									<div class="activator">
+										<p>{{ post.comments.length }} editor(s) have commentend on this post</p>
+									</div>
+									{% endif %}
+									{% if (user.id == post.author.id or user.role == 'editor' or user.role == 'executive' or user.role == 'admin') and not (post.verified) %}
+									<br>
+									<div class="activator">
+										<p>Post has not been verified yet. Editor action needed!</p>
+									</div>
+									{% endif %}
+								</div>
+								<div class="card-reveal">
+									<span class="card-title">{{ post.headline }}<i class="material-icons right">close</i></span>
+									<p><strong>Author: </strong>{{ post.author.firstname}} {{ post.author.lastname }}</p>
+									<p><strong>Written: </strong>{{ post.createdAt }}</p>
+									<p><strong>Category: </strong>{{ post.category }}</p>
+									<br>
+									<div class="row">
+										<div class="col">
+											<a href="/view/{{ post.id }}"><i class="material-icons left">event_note</i>View post</a>
+										</div>
+										{% if user.id == post.author.id %}
+										<div class="col">
+											<a href="/edit/{{ post.id }}"><i class="material-icons left">event_note</i>Edit post</a>
+										</div>
+										{% endif %}
+									</div>
+								</div>
+							</div>
+						</div>
+						{% endif %}
+						{% endfor %}
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</main>
+
+	{% include "partials/scripts.njk" %}
+	<script src="/js/browse.js"></script>
+</body>
+
+{% include "partials/footer.njk" %}
+
+</html>

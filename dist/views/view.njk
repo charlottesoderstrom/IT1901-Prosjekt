@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{% include "partials/dochead.njk" %}
+
+<body>
+
+	{% include "partials/header.njk" %}
+
+	<main>
+
+		<div class="container">
+			<div class="row">
+				<div class="col s12">
+					<div class="container">
+						<div class="row">
+							<div class="card">
+								<div class="card-content">
+									<h5 class="card-title">{{ post.headline }}</h5>
+									<p><strong>Author: </strong>{{ post.author.firstname}} {{ post.author.lastname }}</p>
+									<p><strong>Written: </strong>{{ post.createdAt }}</p>
+									<p><strong>Category: </strong>{{ post.category }}</p>
+									<br>
+									<div class="card-content content-container">
+										{{ post.text|safe }}
+									</div>
+									<br>
+									<div class="row">
+										{% if (user.role == 'editor' or user.role == 'executive' or user.role == 'admin') %}
+										<div class="col">
+											<button class="btn" id="view-verify-btn"></button>
+										</div>
+										{% endif %}
+										{% if (user.id == post.author.id) %}
+										<div class="col">
+											<a href="/edit/{{ post.id }}" class="btn">Edit</a>
+										</div>
+										{% endif %}
+									</div>
+									<br>
+								</div>
+
+								{% if user %}
+								<div class="card-content">
+									<div class="row">
+										<a id="view-follow-author-btn" class="waves-effect waves-light btn"></a>
+									</div>
+									<div class="row">
+										<a id="view-follow-cat-btn" class="waves-effect waves-light btn"></a>
+									</div>
+								</div>
+								{% endif %}
+
+								{% if user.id == post.author.id or user.role == 'editor' or user.role == 'executive' or user.role == 'admin' %}
+								<div class="card-content">
+									<div class="row">
+										<strong>Comments</strong>
+										<ul class="collection">
+											{% if post.comments.length !== 0 %}
+											{% for comment in post.comments %}
+											<li class="collection-item">
+												<div class="row">
+													<p><strong>{{ comment.author.firstname }} {{ comment.author.lastname }}</strong> wrote at {{
+														comment.createdAt }}: </p>
+												</div>
+												<div class="row">
+													<span style="white-space: pre-wrap;">{{ comment.text }}</span>
+												</div>
+											</li>
+											{% endfor %}
+											{% else %}
+											<li class="collection-item">No comments yet...</li>
+											{% endif %}
+										</ul>
+									</div>
+									<div class="row">
+										<div class="input-field">
+											<textarea type="textarea" id="comment-{{ post.id }}" placeholder="Your thoughts..."></textarea>
+										</div>
+										<a class="btn" onclick="pushComment( String('{{ post.id }}') )">Add comment</a>
+									</div>
+								</div>
+								{% endif %}
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</main>
+
+	{% include "partials/scripts.njk" %}
+	<script src="/js/view.js"></script>
+
+	{% set userObj = { users: user.users, categories: user.categories } %}
+	<script> 
+		setupSubButtons( `{{ post.author.id }}`, `{{ post.category }}`, `{{ userObj | dump | safe }}` );
+		
+		const role = '{{ user.role | safe }}'
+		if (['editor', 'executive', 'admin'].some( u => role === u)) {
+			setupVerifyBtn( `{{ post.id }}`, {{ post.verified | safe }} );	
+		}
+	</script>
+</body>
+
+{% include "partials/footer.njk" %}
+
+</html>

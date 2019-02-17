@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" class="index-page">
+
+{% include "partials/dochead.njk" %}
+
+<body>
+
+	<main>
+
+		<div class="container">
+			<div class="row">
+				<div class="col s10 push-s1 m8 push-m2 l6 push-l3">
+					<div class="row">
+						<div class="brand-logo center">
+							<img src="../images/logo-textful.png" alt="Textful" width="50%" heigth="20%">
+						</div>
+					</div>
+					<div class="row">
+						<ul class="collapsible index-collapsible">
+							<li class="active">
+								<div class="collapsible-header"><i class="material-icons">check_box</i>Login</div>
+								<div class="collapsible-body">{% include "./components/login.njk" %}</div>
+							</li>
+							<li>
+								<div class="collapsible-header"><i class="material-icons">add_box</i>Sign up</div>
+								<div class="collapsible-body">{% include "./components/signup.njk" %}</div>
+							</li>
+							<li>
+								<div class="collapsible-header"><i class="material-icons">sentiment_very_satisfied</i>Browse as guest</div>
+								<div class="collapsible-body"><a href="/browse?guest=true" class="btn">Browse!</a></div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</main>
+
+	{% include "partials/scripts.njk" %}
+
+	<script src="/js/index.js"></script>
+
+</body>
+
+{% include "partials/footer.njk" %}
+
+</html>
