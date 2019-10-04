@@ -46,11 +46,3 @@ http://localhost:3000
 Viktige notater og merknader her...
 
 
-## Authors
-
-* **Adrian Leren**
-* **Ole Fredrik Borgundvåg Berg**
-* **Thomas A. Ramirez Fernandez**
-* **Charlotte Söderström**
-* **Silje Førde Villandseie**
-* Fyll inn navnene deres nedover her!
